@@ -2,21 +2,12 @@ const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    brand: { type: String, default: 'No Brand' },
-    category: { 
-        type: String, 
-        required: true,
-        enum: ['football', 'futsal', 'running', 'basketball', 'sneaker', 'other'], 
-        default: 'other'
-    },
+    brand: String,
     price: { type: Number, required: true },
     description: String,
-    
-    // ✅ แก้ไขตรงนี้: เปลี่ยนชื่อเป็น inStock
     inStock: { type: Boolean, default: true },
-    
-    sizes: [{ type: String }],
-    images: [{ type: String }],
+    sizes: [{ type: String }],   // ✅ เก็บไซส์เป็น Array
+    images: [{ type: String }],  // ✅ เก็บรูปเป็น Array
     createdAt: { type: Date, default: Date.now }
 });
 

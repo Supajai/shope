@@ -3,7 +3,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const connectDB = require('./config/db');
-const authRoutes = require('./routes/authRoutes');
 
 // Connect Database
 connectDB();
@@ -15,7 +14,6 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
-app.use('/api/auth', authRoutes);
 app.use('/api', require('./routes/authRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
