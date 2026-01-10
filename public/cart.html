@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Bag | PROKICKS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style> 
+        body { font-family: 'Inter', sans-serif; } 
+        .font-anton { font-family: 'Anton', sans-serif; letter-spacing: 0.05em; } 
+        
+        /* Custom Scrollbar for Cart Items */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-900 antialiased">
+
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-all">
+        <div class="container mx-auto px-4 md:px-6 h-20 flex justify-between items-center">
+            <a href="index.html" class="text-3xl font-anton italic tracking-tighter hover:opacity-70 transition">
+                PRO<span class="text-red-600">KICKS</span>
+            </a>
+            
+            <a href="index.html" class="text-[10px] md:text-xs font-bold uppercase text-gray-400 hover:text-black transition flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Continue Shopping
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mx-auto py-28 px-4 md:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+            
+            <div class="lg:col-span-7 order-2 lg:order-1">
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
+                    
+                    <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
+                        <h2 class="text-lg font-black uppercase flex items-center gap-3 tracking-wide">
+                            <span class="bg-black text-white w-6 h-6 flex items-center justify-center rounded-full text-[10px]">1</span> 
+                            Shipping Info
+                        </h2>
+                    </div>
+
+                    <form id="order-form" class="space-y-6" enctype="multipart/form-data">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-wider">Full Name</label>
+                                <input name="name" type="text" class="w-full bg-gray-50 border border-gray-200 p-3 rounded-lg font-bold text-sm focus:bg-white focus:border-black focus:ring-0 outline-none transition" placeholder="Your Name" required>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-wider">Phone Number</label>
+                                <input name="tel" type="tel" class="w-full bg-gray-50 border border-gray-200 p-3 rounded-lg font-bold text-sm focus:bg-white focus:border-black focus:ring-0 outline-none transition" placeholder="08X-XXX-XXXX" required>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                             <label class="text-[10px] font-bold uppercase text-gray-400 tracking-wider">Shipping Address</label>
+                             <textarea name="address" class="w-full bg-gray-50 border border-gray-200 p-4 rounded-lg text-sm h-32 focus:bg-white focus:border-black focus:ring-0 outline-none transition resize-none leading-relaxed" placeholder="Enter full address details..." required></textarea>
+                        </div>
+
+                        <div class="flex items-center gap-3 py-2 border-b border-gray-50 pb-6">
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="save-info" class="sr-only peer">
+                                <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-black"></div>
+                                <span class="ml-3 text-xs font-bold text-gray-500 uppercase tracking-wide">Save this info for next time</span>
+                            </label>
+                        </div>
+
+                        <div class="pt-4 mt-4">
+                            <h3 class="text-lg font-black uppercase mb-6 flex items-center gap-3 tracking-wide">
+                                <span class="bg-black text-white w-6 h-6 flex items-center justify-center rounded-full text-[10px]">2</span> 
+                                Payment Method
+                            </h3>
+                            
+                            <div class="bg-blue-50 border border-blue-100 p-5 rounded-xl flex items-center gap-4 mb-6 shadow-sm">
+                                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm text-blue-600 font-bold text-xs border border-blue-100 flex-shrink-0">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="font-black text-sm text-blue-900 uppercase tracking-wide">Bank Transfer</p>
+                                    <p class="text-xs text-blue-600 font-mono mt-1">KBANK: <span class="font-bold select-all">123-4-56789-0</span> (ProKicks Inc.)</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold uppercase text-gray-400 tracking-wider">Upload Payment Slip</label>
+                                <div class="relative group">
+                                    <input type="file" name="slipImage" accept="image/*" class="block w-full text-xs text-slate-500
+                                      file:mr-4 file:py-3 file:px-6
+                                      file:rounded-lg file:border-0
+                                      file:text-[10px] file:font-black file:uppercase file:tracking-widest
+                                      file:bg-black file:text-white
+                                      file:cursor-pointer hover:file:bg-red-600 file:transition
+                                      cursor-pointer bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:border-black transition" required>
+                                </div>
+                                <p class="text-[10px] text-gray-400 mt-2 flex items-center gap-1">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    Please upload transfer slip (JPG, PNG) max 5MB
+                                </p>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-black text-white py-4 rounded-xl font-bold uppercase tracking-[0.15em] text-xs hover:bg-red-600 transition duration-300 shadow-lg transform active:scale-[0.98] mt-6 flex items-center justify-center gap-2">
+                            <span>Place Order Now</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 order-1 lg:order-2 lg:sticky lg:top-28">
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-gray-100">
+                    <h2 class="font-black uppercase mb-6 pb-4 border-b border-gray-100 flex justify-between items-center text-lg tracking-tight">
+                        Your Bag 
+                        <span class="bg-gray-100 text-gray-600 text-[10px] px-3 py-1 rounded-full font-bold uppercase" id="item-count">0 ITEMS</span>
+                    </h2>
+                    
+                    <div id="cart-items" class="space-y-6 mb-8 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+                        <div class="text-center py-12 opacity-50 flex flex-col items-center">
+                            <svg class="w-12 h-12 mb-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                            <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Your bag is empty</span>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-dashed border-gray-200 pt-6 space-y-3">
+                        <div class="flex justify-between items-center text-sm font-medium text-gray-500">
+                            <span>Subtotal</span>
+                            <span id="subtotal-price" class="font-mono text-slate-700">฿0</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm font-medium text-gray-500">
+                            <span>Shipping</span>
+                            <span class="text-green-600 font-bold text-xs uppercase bg-green-50 px-2 py-1 rounded">Free Shipping</span>
+                        </div>
+                        <div class="flex justify-between items-end pt-4 mt-4 border-t border-gray-100">
+                            <span class="text-sm font-black uppercase text-black tracking-widest">Total</span>
+                            <span id="total-price" class="text-3xl font-anton tracking-tighter text-red-600">฿0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script> 
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script> 
+
+</body>
+</html>

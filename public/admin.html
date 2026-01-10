@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .modal { opacity: 0; pointer-events: none; transition: 0.2s; }
+        .modal.active { opacity: 1; pointer-events: auto; }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-900 min-h-screen">
+    <nav class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b px-4 h-16 flex justify-between items-center">
+        <a href="index.html" class="font-black text-xl italic">PRO<span class="text-red-600">KICKS</span> <span class="text-[10px] bg-black text-white px-2 rounded">ADMIN</span></a>
+        <button onclick="logout()" class="text-xs font-bold text-red-500 bg-red-50 px-3 py-2 rounded-full">Logout</button>
+    </nav>
+    
+    <div id="toast-container" class="fixed bottom-5 right-5 z-[100] flex flex-col gap-2"></div>
+
+    <div class="container mx-auto py-6 px-4">
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
+            
+            <div class="xl:col-span-4 order-1 xl:order-none xl:sticky xl:top-24">
+                <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <div class="bg-red-600 text-white p-4 font-bold text-xs uppercase tracking-wider">New Product</div>
+                    <form id="add-product-form" class="p-4 space-y-4">
+                        <input name="name" class="w-full border p-2 rounded text-sm font-bold" placeholder="Product Name" required>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input name="brand" class="border p-2 rounded text-sm" placeholder="Brand">
+                            <input name="price" type="number" class="border p-2 rounded text-sm font-bold" placeholder="Price" required>
+                        </div>
+                        
+                        <select name="category" class="w-full border p-2 rounded text-sm bg-white">
+                            <option value="football">Football</option>
+                            <option value="futsal">Futsal</option>
+                            <option value="running">Running</option>
+                            <option value="basketball">Basketball</option>
+                            <option value="sneaker">Sneaker</option>
+                            <option value="other">Other</option>
+                        </select>
+
+                        <input name="sizes" class="w-full border p-2 rounded text-sm" placeholder="Sizes (e.g. 38, 39, 40)">
+                        <textarea name="description" class="w-full border p-2 rounded text-sm h-20" placeholder="Description"></textarea>
+                        
+                        <label class="block w-full border border-dashed p-4 text-center text-xs text-gray-400 rounded cursor-pointer hover:bg-gray-50">
+                            Tap to Upload Images
+                            <input id="p-img-file" type="file" multiple accept="image/*" class="hidden">
+                        </label>
+                        <div id="image-preview" class="flex gap-2 overflow-x-auto p-1"></div>
+
+                        <select name="stock" class="w-full border p-2 rounded text-sm font-bold"><option value="true">In Stock</option><option value="false">Out of Stock</option></select>
+                        <button type="submit" class="w-full bg-green-600 text-white py-3 rounded font-bold uppercase text-xs hover:bg-blue-700">Add Product</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="xl:col-span-8 space-y-8 order-2 xl:order-none">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="p-4 border-b font-black uppercase text-sm flex justify-between">
+                        <span>Recent Orders</span> <button onclick="loadOrders()" class="text-blue-500 hover:underline">Refresh</button>
+                    </div>
+                    <div class="overflow-x-auto"><table class="w-full text-left whitespace-nowrap min-w-[600px]"><tbody id="order-list" class="text-sm"></tbody></table></div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="p-4 border-b font-black uppercase text-sm">Inventory</div>
+                    <div class="overflow-x-auto"><table class="w-full text-left whitespace-nowrap min-w-[600px]"><tbody id="product-list" class="text-sm"></tbody></table></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-modal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-[95%] md:max-w-md rounded-xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto">
+            <h3 class="font-bold text-lg mb-4">Edit Product</h3>
+            <form id="edit-product-form" class="space-y-3">
+                <input type="hidden" id="edit-id">
+                <input id="edit-name" class="w-full border p-2 rounded" placeholder="Name" required>
+                <div class="grid grid-cols-2 gap-2">
+                    <input id="edit-brand" class="border p-2 rounded" placeholder="Brand">
+                    <input id="edit-price" type="number" class="border p-2 rounded" placeholder="Price" required>
+                </div>
+                <select id="edit-category" class="w-full border p-2 rounded text-sm bg-white">
+                    <option value="football">Football</option>
+                    <option value="futsal">Futsal</option>
+                    <option value="running">Running</option>
+                    <option value="basketball">Basketball</option>
+                    <option value="sneaker">Sneaker</option>
+                    <option value="other">Other</option>
+                </select>
+                <input id="edit-sizes" class="w-full border p-2 rounded" placeholder="Sizes">
+                <textarea id="edit-description" class="w-full border p-2 rounded h-20" placeholder="Description"></textarea>
+                <input id="edit-img-file" type="file" multiple class="text-xs">
+                <select id="edit-stock" class="w-full border p-2 rounded"><option value="true">In Stock</option><option value="false">Out of Stock</option></select>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="document.getElementById('edit-modal').classList.remove('active')" class="px-4 py-2 text-gray-500 font-bold text-xs">CANCEL</button>
+                    <button type="submit" class="px-6 py-2 bg-black text-white rounded font-bold text-xs">SAVE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Detail</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>body{font-family:'Inter',sans-serif;} .font-anton{font-family:'Anton',sans-serif;}</style>
+</head>
+<body class="bg-white text-black antialiased">
+    
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
+        <div class="container mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="index.html" class="text-3xl font-anton italic tracking-tighter hover:opacity-70 transition">
+                PRO<span class="text-red-600">KICKS</span>
+            </a>
+            <div class="flex items-center gap-6">
+                <a href="cart.html" class="font-bold text-xs uppercase tracking-widest hover:text-red-600 transition">My Bag</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto py-32 px-6 min-h-screen">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            
+            <div class="space-y-4">
+                <div class="bg-[#F8F8F8] flex items-center justify-center rounded-sm overflow-hidden relative group h-[500px] border border-gray-100">
+                    <img id="pd-img" src="" class="w-[85%] h-auto object-contain drop-shadow-2xl transition duration-500">
+                </div>
+                <div id="pd-gallery" class="grid grid-cols-5 gap-2"></div>
+            </div>
+
+            <div class="flex flex-col justify-center">
+                <div class="mb-8">
+                    <p id="pd-brand" class="text-gray-400 text-xs font-bold uppercase tracking-[0.3em] mb-4">Brand</p>
+                    <h1 id="pd-name" class="text-5xl lg:text-7xl font-anton uppercase italic leading-none mb-6"></h1>
+                    <p id="pd-price" class="text-3xl font-bold font-mono text-black border-l-4 border-red-600 pl-4"></p>
+                </div>
+
+                <div class="mb-10">
+                    <label class="block text-xs font-bold uppercase tracking-widest mb-4 text-gray-500">Select Size</label>
+                    <div id="pd-sizes" class="grid grid-cols-4 gap-3"></div>
+                </div>
+
+                <button id="add-btn" class="w-full bg-black text-white py-5 font-bold uppercase tracking-widest text-sm hover:bg-red-600 transition-all transform active:scale-95 shadow-xl">
+                    Add to Cart
+                </button>
+
+                <div class="mt-12 border-t border-gray-100 pt-8">
+                    <h3 class="text-xs font-bold uppercase tracking-widest mb-3">Description</h3>
+                    <p id="pd-desc" class="text-sm text-gray-600 leading-relaxed font-medium"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="toast-container"></div>
+    <script src="script.js"></script>
+    <script>
+        const id = new URLSearchParams(location.search).get('id');
+        let currentProduct = null, selectedSize = null;
+
+        fetch(`${API_URL}/products`).then(r=>r.json()).then(products => {
+            currentProduct = products.find(p => p._id === id);
+            if(currentProduct) {
+                // Handle Images
+                const images = (currentProduct.images && currentProduct.images.length > 0) 
+                    ? currentProduct.images 
+                    : [currentProduct.image || 'https://via.placeholder.com/500'];
+                
+                document.getElementById('pd-img').src = images[0];
+
+                // Render Gallery
+                document.getElementById('pd-gallery').innerHTML = images.map((img, idx) => `
+                    <div onclick="setMainImg('${img}', this)" 
+                         class="cursor-pointer border-2 ${idx===0?'border-black':'border-transparent'} hover:border-gray-300 transition bg-gray-50 aspect-square flex items-center justify-center p-2 rounded-sm">
+                        <img src="${img}" class="w-full h-full object-contain">
+                    </div>
+                `).join('');
+
+                // Info
+                document.getElementById('pd-name').innerText = currentProduct.name;
+                document.getElementById('pd-brand').innerText = currentProduct.brand || 'Premium';
+                document.getElementById('pd-price').innerText = money(currentProduct.price);
+                document.getElementById('pd-desc').innerText = currentProduct.description || '-';
+                
+                // Button
+                const btn = document.getElementById('add-btn');
+                if(!currentProduct.inStock) {
+                    btn.disabled = true; 
+                    btn.innerText = "SOLD OUT"; 
+                    btn.className = "w-full bg-gray-200 text-gray-400 py-5 font-bold uppercase cursor-not-allowed";
+                } else {
+                    btn.onclick = () => addToCart(currentProduct, selectedSize);
+                }
+
+                // Sizes
+                document.getElementById('pd-sizes').innerHTML = currentProduct.sizes.map(s => 
+                    `<button onclick="setSize(this,'${s}')" class="sz-btn border border-gray-200 py-4 font-bold text-sm hover:border-black transition">${s}</button>`
+                ).join('');
+            }
+        });
+
+        window.setMainImg = (src, el) => {
+            document.getElementById('pd-img').src = src;
+            document.querySelectorAll('#pd-gallery > div').forEach(d => {
+                d.classList.remove('border-black'); d.classList.add('border-transparent');
+            });
+            el.classList.remove('border-transparent'); el.classList.add('border-black');
+        }
+
+        window.setSize = (btn, size) => {
+            document.querySelectorAll('.sz-btn').forEach(b => {
+                b.classList.remove('bg-black','text-white');
+                b.classList.add('border-gray-200','text-black');
+            });
+            btn.classList.remove('border-gray-200','text-black');
+            btn.classList.add('bg-black','text-white');
+            selectedSize = size;
+        }
+    </script>
+    <script src="js/utils.js"></script>
+</body>
+</html>
