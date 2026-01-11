@@ -24,20 +24,24 @@
         </div>
     </nav>
 
-    <header class="relative h-[85vh] flex items-center justify-center bg-black overflow-hidden text-center px-4">
-        <img src="https://images.unsplash.com/photo-1556906781-9a412961d289?q=80&w=2000" class="absolute inset-0 w-full h-full object-cover opacity-60">
-        <div class="relative z-10 max-w-4xl">
-            <p class="text-red-500 font-bold uppercase tracking-[0.4em] text-sm mb-6 animate-pulse">New Season 2026</p>
-            <h1 class="text-7xl md:text-9xl text-white font-anton uppercase italic mb-8 leading-none drop-shadow-2xl">
-                Run The <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">Streets</span>
+    <header class="relative h-[60vh] lg:h-[80vh] flex items-center justify-center bg-black overflow-hidden mt-20 group">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70 z-10"></div>
+        <img src="https://images.unsplash.com/photo-1556906781-9a412961c28c?q=80&w=2000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-90 scale-105 group-hover:scale-100 transition-transform duration-[3s] ease-out">
+        <div class="relative z-20 text-center text-white px-4 fade-in">
+            <div class="inline-block bg-red-600 px-4 py-1 mb-6 skew-x-[-10deg] shadow-lg">
+                <p class="font-black uppercase tracking-[0.2em] text-[10px] md:text-xs skew-x-[10deg]">New Season 2024</p>
+            </div>
+            <h1 class="text-6xl md:text-8xl lg:text-9xl font-anton uppercase italic mb-8 leading-[0.85] drop-shadow-2xl">
+                Run The <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500">Streets</span>
             </h1>
-            <a href="#shop" class="inline-block bg-red-600 text-white px-10 py-4 font-bold uppercase tracking-widest text-xs hover:bg-red-700 transition transform hover:scale-105 border border-red-600 shadow-xl">
-                Shop Collection
+            <a href="#shop-section" class="group/btn relative inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-black uppercase tracking-widest text-xs overflow-hidden transition-all hover:bg-black hover:text-white border border-white shadow-xl hover:shadow-2xl hover:-translate-y-1">
+                <span class="relative z-10">Shop Collection</span>
             </a>
-        </div>
+    </div>
     </header>
 
-    <div id="shop" class="bg-white py-24 min-h-screen">
+
+     <div id="shop-section" class="bg-gray-50/50 py-16 md:py-24 min-h-screen relative overflow-hidden">
         <div class="container mx-auto px-6">
             <div class="flex justify-between items-end mb-16 pb-6 border-b border-gray-100">
                 <h2 class="text-5xl md:text-6xl font-anton uppercase italic">The <span class="text-red-600">Lineup</span></h2>
@@ -46,9 +50,19 @@
         </div>
     </div>
 
-    <footer class="bg-black text-white border-t border-gray-900 py-12 text-center">
-        <div class="text-2xl font-anton italic tracking-tighter mb-4">PRO<span class="text-red-600">KICKS</span></div>
-        <p class="text-[10px] uppercase font-bold text-gray-500 tracking-widest">© 2026 All Rights Reserved.</p>
+    <footer class="bg-black text-white pt-24 pb-12 border-t border-gray-900 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-600 via-purple-600 to-blue-600"></div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <div class="text-6xl md:text-8xl font-anton italic tracking-tighter mb-8 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-white hover:to-gray-500 transition-all cursor-default select-none">PROKICKS</div>
+            <div class="flex flex-wrap justify-center gap-8 mb-12 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
+                <a href="#" class="hover:text-white hover:underline decoration-red-600 underline-offset-4 transition-all">About Us</a>
+                <a href="#" class="hover:text-white hover:underline decoration-red-600 underline-offset-4 transition-all">Size Guide</a>
+                <a href="#" class="hover:text-white hover:underline decoration-red-600 underline-offset-4 transition-all">Delivery</a>
+                <a href="#" class="hover:text-white hover:underline decoration-red-600 underline-offset-4 transition-all">Returns</a>
+                <a href="admin.html" class="hover:text-red-500 hover:underline decoration-red-600 underline-offset-4 transition-all">Admin</a>
+            </div>
+            <p class="text-[9px] font-medium text-gray-700 tracking-wide">© 2026 PROKICKS SPORTING GOODS. ALL RIGHTS RESERVED.</p>
+        </div>
     </footer>
 
     <div id="toast-container"></div>
